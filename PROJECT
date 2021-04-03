@@ -1,7 +1,7 @@
 domain: example.thetirefire
 repo: github.com/thetirefire/example
 resources:
-- group: batch
-  kind: CronJob
+- group: foo
+  kind: Bar
   version: v1
 version: "2"

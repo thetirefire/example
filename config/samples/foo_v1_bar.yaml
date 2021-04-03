@@ -1,0 +1,7 @@
+apiVersion: foo.example.thetirefire/v1
+kind: Bar
+metadata:
+  name: bar-sample
+spec:
+  color: green
+  shape: square

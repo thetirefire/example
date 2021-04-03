@@ -27,7 +27,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	batchv1 "github.com/thetirefire/example/api/v1"
+	foov1 "github.com/thetirefire/example/api/v1"
 	"github.com/thetirefire/example/controllers"
 	// +kubebuilder:scaffold:imports
 )
@@ -40,7 +40,7 @@ var (
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
-	_ = batchv1.AddToScheme(scheme)
+	_ = foov1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
 
@@ -67,8 +67,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.CronJobReconciler{}).SetupWithManager(context.Background(), mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "CronJob")
+	if err = (&controllers.BarReconciler{}).SetupWithManager(context.Background(), mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "Bar")
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder

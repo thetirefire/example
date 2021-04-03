@@ -7,9 +7,9 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - batch
+  - foo.example.thetirefire
   resources:
-  - jobs
+  - bars
   verbs:
   - create
   - delete
@@ -19,27 +19,9 @@ rules:
   - update
   - watch
 - apiGroups:
-  - batch
+  - foo.example.thetirefire
   resources:
-  - jobs/status
-  verbs:
-  - get
-- apiGroups:
-  - batch.example.thetirefire
-  resources:
-  - cronjobs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - batch.example.thetirefire
-  resources:
-  - cronjobs/status
+  - bars/status
   verbs:
   - get
   - patch

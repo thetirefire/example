@@ -3,7 +3,7 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: cronjobs.batch.example.thetirefire
+  name: bars.foo.example.thetirefire
 spec:
   conversion:
     strategy: Webhook
