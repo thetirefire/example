@@ -22,7 +22,6 @@ import (
 	"sort"
 	"time"
 
-	"github.com/go-logr/logr"
 	"github.com/robfig/cron"
 	kbatch "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -38,7 +37,6 @@ import (
 // CronJobReconciler reconciles a CronJob object
 type CronJobReconciler struct {
 	client.Client
-	Log    logr.Logger
 	Scheme *runtime.Scheme
 	Clock
 }
@@ -62,9 +60,8 @@ var (
 // +kubebuilder:rbac:groups=batch,resources=jobs,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=batch,resources=jobs/status,verbs=get
 
-func (r *CronJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
-	ctx := context.Background()
-	log := r.Log.WithValues("cronjob", req.NamespacedName)
+func (r *CronJobReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+	log := ctrl.LoggerFrom(ctx).WithValues("cronjob", req.NamespacedName)
 
 	var cronJob batch.CronJob
 	if err := r.Get(ctx, req.NamespacedName, &cronJob); err != nil {
@@ -356,13 +353,21 @@ var (
 	apiGVStr    = batch.GroupVersion.String()
 )
 
-func (r *CronJobReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *CronJobReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager) error {
 	// set up a real clock, since we're not in a test
 	if r.Clock == nil {
 		r.Clock = realClock{}
 	}
 
-	if err := mgr.GetFieldIndexer().IndexField(&kbatch.Job{}, jobOwnerKey, func(rawObj runtime.Object) []string {
+	if r.Scheme == nil {
+		r.Scheme = mgr.GetScheme()
+	}
+
+	if r.Client == nil {
+		r.Client = mgr.GetClient()
+	}
+
+	if err := mgr.GetFieldIndexer().IndexField(ctx, &kbatch.Job{}, jobOwnerKey, func(rawObj client.Object) []string {
 		// grab the job object, extract the owner...
 		job := rawObj.(*kbatch.Job)
 		owner := metav1.GetControllerOf(job)
