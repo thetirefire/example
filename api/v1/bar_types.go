@@ -31,6 +31,7 @@ type BarSpec struct {
 
 // BarStatus defines the observed state of Bar.
 type BarStatus struct {
+	// TODO: change this to a full URL rather than a path
 	// +optional
 	Path string `json:"path,omitempty"`
 }

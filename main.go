@@ -171,6 +171,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	// TODO: wire up a webserver, to serve images saved by the controller after reconciliation
+
 	if err = (&controllers.BarReconciler{}).SetupWithManager(context.Background(), mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Bar")
 		os.Exit(1)
