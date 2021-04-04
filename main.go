@@ -125,7 +125,7 @@ func main() {
 		setupLog.Error(err, "timed out attempting to create badidea client")
 	}
 
-	// TODO: deploy crd resources
+	// TODO: embed these resources
 	c1 := exec.Command("kustomize", "build", "config/crd")
 	c2 := exec.Command("kubectl", "--server", "https://localhost:6443", "--insecure-skip-tls-verify", "--username", "bad", "--password", "idea", "create", "-f", "-")
 
@@ -156,6 +156,8 @@ func main() {
 		setupLog.Error(err, "failed to run kubectl")
 		os.Exit(1)
 	}
+
+	// TODO: poll until crd resources are available
 
 	mgr, err := ctrl.NewManager(restConfig, ctrl.Options{
 		Scheme:             scheme,
