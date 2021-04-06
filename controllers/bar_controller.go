@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -40,8 +41,8 @@ func (r *BarReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 
 	log.Info("Reconciling Bar")
 
-	var Bar foo.Bar
-	if err := r.Get(ctx, req.NamespacedName, &Bar); err != nil {
+	var bar foo.Bar
+	if err := r.Get(ctx, req.NamespacedName, &bar); err != nil {
 		log.Error(err, "unable to fetch Bar")
 		// we'll ignore not-found errors, since they can't be fixed by an immediate
 		// requeue (we'll need to wait for a new notification), and we can get them
@@ -52,7 +53,10 @@ func (r *BarReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	// TODO: handle deletion
 	// TODO: test if we need to create bar and create if needed
 
-	if err := r.Status().Update(ctx, &Bar); err != nil {
+	// Set Status
+	bar.Status.Path = fmt.Sprintf("/%s/%s", bar.Namespace, bar.Name)
+
+	if err := r.Status().Update(ctx, &bar); err != nil {
 		log.Error(err, "unable to update Bar status")
 		return ctrl.Result{}, err
 	}

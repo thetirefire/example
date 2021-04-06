@@ -127,7 +127,7 @@ func main() {
 
 	// TODO: embed these resources
 	c1 := exec.Command("kustomize", "build", "config/crd")
-	c2 := exec.Command("kubectl", "--server", "https://localhost:6443", "--insecure-skip-tls-verify", "--username", "bad", "--password", "idea", "create", "-f", "-")
+	c2 := exec.Command("kubectl", "--server", "https://localhost:6443", "--insecure-skip-tls-verify", "--username", "bad", "--password", "idea", "apply", "-f", "-")
 
 	r, w := io.Pipe()
 	c1.Stdout = w
