@@ -30,14 +30,5 @@ kubectl api-resources
 
 kubectl explain bar --recursive
 
-kubectl create -f - <<EOF
----
-apiVersion: foo.example.thetirefire/v1
-kind: Bar
-metadata:
-  name: test
-spec:
-  color: blue
-  shape: circle
-EOF
+kubectl create -f config/samples/foo_v1_bar.yaml
 ```
