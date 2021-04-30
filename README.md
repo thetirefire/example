@@ -1,5 +1,12 @@
 # BadIdea Example project
 
+## Prerequisites
+
+* Go v1.15+
+* `kubectl` and [`kustomize`](https://kustomize.io) must be available on the `$PATH`
+
+## Usage
+
 ```sh
 go run main.go
 
