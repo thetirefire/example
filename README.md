@@ -1,4 +1,4 @@
-# BadIdea Example project
+# [BadIdea](https://github.com/thetirefire/badidea) Example project
 
 ```sh
 go run main.go
@@ -40,4 +40,8 @@ spec:
   color: blue
   shape: circle
 EOF
+
+kubectl get bars
+
+kubectl get bar test --output=yaml
 ```
